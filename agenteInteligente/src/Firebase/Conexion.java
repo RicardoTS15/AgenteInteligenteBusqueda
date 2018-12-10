@@ -55,6 +55,14 @@ public class Conexion {
         /*-------------------------------------------------------------------
         List<Ingrediente> Li = getIngredientes("Receta 1");
         -------------------------------------------------------------------*/
+        
+        
+        //getAllNamesRecetas
+        /*-------------------------------------------------------------------
+        String[] Names = getAllNamesRecetas();
+        -------------------------------------------------------------------*/
+        
+        
         return;
     }
 
@@ -73,7 +81,12 @@ public class Conexion {
         Type Ingredientes = new TypeToken<List<Ingrediente>>(){}.getType();
         String json = sendJson("{\"id\":\""+ receta +"\"}","getIngredientes");
         Gson gson = new Gson();
-        return gson.fromJson(json.substring(json.indexOf("["), json.length() -1), Ingredientes);
+        return gson.fromJson(json.substring(json.indexOf("[")+1, json.length() -1), Ingredientes);
+    }
+    
+    public static String[] getAllNamesRecetas(){
+        String json = sendJson("","getAllNamesRecetas");
+        return json.substring(json.indexOf("[")+1,json.indexOf("]")).split(",");
     }
 
     private static String sendJson(String json, String function) {
